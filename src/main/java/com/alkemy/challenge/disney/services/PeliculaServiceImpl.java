@@ -7,7 +7,10 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import com.alkemy.challenge.disney.models.Genero;
 import com.alkemy.challenge.disney.models.Pelicula;
+import com.alkemy.challenge.disney.repositories.PeliculaDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,16 +19,18 @@ import com.alkemy.challenge.disney.repositories.PeliculaDao;
 @Service
 public class PeliculaServiceImpl implements PeliculaService {
 
-    @PersistenceContext
-    private EntityManager em;
+
 
     @Autowired
     private PeliculaDao peliculaDao;
 
+    @Autowired
+    private PeliculaDaoImpl peliculaDaoImpl;
+
+
     @Override
     public List<Pelicula> listPeliculas() {
-        Query query = em.createQuery("Select p.titulo from pelicula p");
-        return (List<Pelicula>) query.getResultList();
+        return peliculaDaoImpl.listPeliculas();
     }
 
     @Override
@@ -51,7 +56,6 @@ public class PeliculaServiceImpl implements PeliculaService {
         }
     }
 
-    @Override
     @Transactional(readOnly = true)
     public Pelicula getPeliculaById(Pelicula pelicula) {
         return peliculaDao.findById(pelicula.getId()).orElse(null);
@@ -61,31 +65,20 @@ public class PeliculaServiceImpl implements PeliculaService {
         return peliculaDao.findById(id);
     }
 
+    @Override
     public List<Pelicula> findByTitulo(String titulo) {
-        Query query = em.createQuery("Select from pelicula p where p.titulo =:titulo");
-        query.setParameter("titulo", titulo);
-        return query.getResultList();
-    }
-
-    public List<Pelicula> findByGenero(String genero) {
-        Query query = em.createQuery("Select from pelicula p inner join p.genero g where g.genero =:genero");
-        query.setParameter("genero", genero);
-        return query.getResultList();
+        return peliculaDaoImpl.findByTitulo(titulo);
     }
 
     @Override
-    public List<Pelicula>getPeliculaByIdGenero(Long id) {
-        Query query = em.createQuery("Select from pelicula p inner join p.genero g where g.id_genero =:id");
-        query.setParameter("id", id);
-        return (List<Pelicula>) query.getResultList();
+    public List<Genero> getPeliculaByIdGenero(Long id) {
+        return peliculaDaoImpl.getPeliculaByIdGenero(id);
     }
 
     @Override
-    public List<Pelicula> orderByAsc(Date fecha) {
-        Query query = em.createQuery("FROM pelicula p where p.fecha_creacion order by =:asc");
-        query.setParameter("asc", fecha);
-        List result = query.getResultList();
-        return result;
+    public List<Pelicula> orderBy(String order) {
+        return peliculaDaoImpl.orderBy(order);
     }
+
 
 }

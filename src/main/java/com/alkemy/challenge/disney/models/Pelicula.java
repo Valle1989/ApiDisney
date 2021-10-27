@@ -5,20 +5,16 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "pelicula")
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Pelicula implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -29,12 +25,16 @@ public class Pelicula implements Serializable {
     
     private String titulo;
     
-    private Date fecha;
+    private Date fecha_creacion;
     
     private Integer calificacion;
     
-    @OneToMany(mappedBy = "pelicula")
-    private List<Nominacion> nominaciones = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "combinados",
+            joinColumns = @JoinColumn(name = "pelicula_id"),
+            inverseJoinColumns = @JoinColumn(name = "personaje_id"))
+    private List<Personaje> personajes;
     
     public Pelicula(){
         
@@ -42,17 +42,8 @@ public class Pelicula implements Serializable {
 
     public Pelicula(String titulo, Date fecha) {
         this.titulo = titulo;
-        this.fecha = fecha;
+        this.fecha_creacion = fecha;
     }
 
-    public void addNominacion(Nominacion nominacion) {
-        nominaciones.add(nominacion);
-        nominacion.setPelicula(this);
-    }
-
-    public void removeNominacion(Nominacion nominacion) {
-        nominaciones.remove(nominacion);
-        nominacion.setPelicula(null);
-    }
     
 }

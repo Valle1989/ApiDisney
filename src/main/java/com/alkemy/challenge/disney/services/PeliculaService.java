@@ -3,6 +3,8 @@ package com.alkemy.challenge.disney.services;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+
+import com.alkemy.challenge.disney.models.Genero;
 import com.alkemy.challenge.disney.models.Pelicula;
 
 public interface PeliculaService {
@@ -17,15 +19,10 @@ public interface PeliculaService {
     
     public Optional<Pelicula> obtenerPorId(Long id);
 
-    public Pelicula getPeliculaById(Pelicula pelicula);
-    
     public List<Pelicula> findByTitulo(String titulo);
-    
-    public List<Pelicula> getPeliculaByIdGenero(Long id);
-    
-    public List<Pelicula> findByGenero( String genero);
-    
-    public List<Pelicula> orderByAsc(Date fecha);
-    
+
+    public List<Genero>getPeliculaByIdGenero(Long id);
+
+    public List<Pelicula> orderBy(String order);
 
 }

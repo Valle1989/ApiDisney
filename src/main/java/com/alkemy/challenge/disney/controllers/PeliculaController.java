@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import com.alkemy.challenge.disney.models.Pelicula;
+import com.alkemy.challenge.disney.services.PeliculaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,16 +25,16 @@ public class PeliculaController {
     private PeliculaService peliculaService;
 
     @GetMapping
-    public List<Pelicula> listadoPeliculas(HttpServletRequest request) {
+    public Object listadoPeliculas(HttpServletRequest request) {
         String name = request.getParameter("name");
         String genre = request.getParameter("genre");
-        String fecha = request.getParameter("asc");
+        String order = request.getParameter("order");
         if(name != null){
             return this.peliculaService.findByTitulo(name);
         } else if(genre != null){
             return this.peliculaService.getPeliculaByIdGenero(Long.valueOf(genre));
-        } else if (fecha != null){
-            return this.peliculaService.orderByAsc(Date.valueOf(fecha));
+        } else if (order != null){
+            return this.peliculaService.orderBy(order);
         } else{
             return peliculaService.listPeliculas();
         }
@@ -65,19 +66,6 @@ public class PeliculaController {
 
     }
     
-    @GetMapping("/name")
-    public List<Pelicula> obtenerPeliculaPorNombre(@RequestParam("nombre") String titulo){
-        return this.peliculaService.findByTitulo(titulo);
-    }
-    
-    @GetMapping("/genero")
-    public List<Pelicula> obtenerPeliculaPorGenero(@RequestParam("idGenero") Long id){
-        return this.peliculaService.getPeliculaByIdGenero(id);
-    }
-    
-    @GetMapping("/order")
-    public List<Pelicula> obtenerPeliculasPorOrdenAscendente(@RequestParam("asc") Date fecha){
-        return this.peliculaService.orderByAsc(fecha);
-    }
+
     
 }
