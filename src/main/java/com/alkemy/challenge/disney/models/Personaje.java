@@ -2,13 +2,13 @@
 package com.alkemy.challenge.disney.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
+
 
 @Data
 @Entity
@@ -21,6 +21,8 @@ public class Personaje implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String imagen;
     
     private String nombre;
     
@@ -30,9 +32,25 @@ public class Personaje implements Serializable {
     
     private String historia;
     
-    @ManyToMany(mappedBy = "personajes")
+    @ManyToMany(mappedBy = "personajes", cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     private List<Pelicula> peliculas;
 
+    public void addPelicula(Pelicula pelicula) {
+        peliculas.add(pelicula);
+    }
 
-    
+    public Personaje() {
+    }
+
+    public Personaje(String imagen, String nombre, Integer edad, Double peso, String historia, List<Pelicula> peliculas) {
+        this.imagen = imagen;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.peso = peso;
+        this.historia = historia;
+        this.peliculas = peliculas;
+    }
 }

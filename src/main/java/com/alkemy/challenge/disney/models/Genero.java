@@ -25,11 +25,19 @@ public class Genero implements Serializable {
     private Long id;
     
     private String nombre;
-    
+
+    private String imagen;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_genero")
     private List<Pelicula> peliculas;
 
-    
-    
+    public Genero() {
+    }
+
+    public Genero(String nombre, String imagen, List<Pelicula> peliculas) {
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.peliculas = peliculas;
+    }
 }

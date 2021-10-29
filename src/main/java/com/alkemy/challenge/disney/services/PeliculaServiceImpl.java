@@ -1,12 +1,7 @@
 package com.alkemy.challenge.disney.services;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import com.alkemy.challenge.disney.models.Genero;
 import com.alkemy.challenge.disney.models.Pelicula;
@@ -42,7 +37,9 @@ public class PeliculaServiceImpl implements PeliculaService {
     @Override
     @Transactional
     public Pelicula save(Pelicula pelicula) {
+        System.out.println(pelicula);
         return peliculaDao.save(pelicula);
+
     }
 
     @Override
@@ -69,6 +66,11 @@ public class PeliculaServiceImpl implements PeliculaService {
     public List<Pelicula> findByTitulo(String titulo) {
         return peliculaDaoImpl.findByTitulo(titulo);
     }
+
+    //@Override
+    //public List<Pelicula> findByGenero(Long id) {
+        //return peliculaDaoImpl.findByGenero(id);
+    //}
 
     @Override
     public List<Genero> getPeliculaByIdGenero(Long id) {

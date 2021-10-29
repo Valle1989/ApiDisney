@@ -25,9 +25,10 @@ public class PeliculaDaoImpl {
         return query.getResultList();
     }
 
-    public List<Pelicula> findByGenero(String genero) {
-        Query query = em.createQuery("from Pelicula p inner join p.genero g where g.genero =:genero");
-        query.setParameter("genero", genero);
+    public List<Pelicula> findByGenero(Long id) {
+        //Query query = em.createQuery("from Pelicula p, Genero g where p.id_genero = :g.id");
+        Query query = em.createQuery("from Genero g inner join Pelicula p ON p.id_genero = g.id where p.id_genero = " + id);
+        //query.setParameter("g.id", id);
         return query.getResultList();
     }
 
@@ -41,7 +42,6 @@ public class PeliculaDaoImpl {
 
     public List<Pelicula> orderBy(String order) {
         Query query = em.createQuery("from Pelicula p order by p.fecha_creacion " + order);
-        //query.setParameter("order", order);
         List result = query.getResultList();
         return result;
     }

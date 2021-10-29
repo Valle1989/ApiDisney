@@ -3,18 +3,20 @@ package com.alkemy.challenge.disney.models;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
+import lombok.ToString;
+
 
 @Data
 @Entity
 @Table(name = "pelicula")
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@ToString
 public class Pelicula implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -22,6 +24,8 @@ public class Pelicula implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String imagen;
     
     private String titulo;
     
@@ -29,13 +33,19 @@ public class Pelicula implements Serializable {
     
     private Integer calificacion;
     
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(
             name = "combinados",
             joinColumns = @JoinColumn(name = "pelicula_id"),
             inverseJoinColumns = @JoinColumn(name = "personaje_id"))
     private List<Personaje> personajes;
-    
+
+    //@ManyToOne(cascade = {CascadeType.PERSIST})
+    //private Genero genero;
+
     public Pelicula(){
         
     }
@@ -45,5 +55,21 @@ public class Pelicula implements Serializable {
         this.fecha_creacion = fecha;
     }
 
-    
+    public Pelicula(String imagen, String titulo, Date fecha_creacion) {
+        this.imagen = imagen;
+        this.titulo = titulo;
+        this.fecha_creacion = fecha_creacion;
+    }
+
+    public Pelicula(String imagen, String titulo, Date fecha_creacion, Integer calificacion, List<Personaje> personajes) {
+        this.imagen = imagen;
+        this.titulo = titulo;
+        this.fecha_creacion = fecha_creacion;
+        this.calificacion = calificacion;
+        this.personajes = personajes;
+    }
+
+    public void addPersonaje(Personaje personaje) {
+        personajes.add(personaje);
+    }
 }
