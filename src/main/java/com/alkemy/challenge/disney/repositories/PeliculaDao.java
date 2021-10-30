@@ -19,10 +19,10 @@ public interface PeliculaDao extends CrudRepository<Pelicula, Long> {
         @Query("from Pelicula p where p.titulo =:titulo")
         public List<Pelicula> findByTitulo(@Param("titulo") String titulo);
 
-        //@Query("from Pelicula p order by p.fecha_creacion ")
-        //public List<Pelicula> orderBy(@Param("order") String order);
+        @Query("from Pelicula p where p.id =:id")
+        public Pelicula findPeliculaById(@Param("id") Long id);
 
-        //@Query("from Genero g inner join g.peliculas p where p.id =:id")
-        //public List<Genero> getPeliculaByIdGenero(@Param("id") Long id);
+        @Query("from Pelicula p where p.genero.id =:id")
+        public List<Pelicula> findMovieByIdGenero(@Param("id") Long id);
 
 }

@@ -5,9 +5,10 @@ import com.alkemy.challenge.disney.repositories.PersonajeDao;
 import com.alkemy.challenge.disney.repositories.PersonajeDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class PersonajeServiceImpl implements PersonajeService{
@@ -20,16 +21,19 @@ public class PersonajeServiceImpl implements PersonajeService{
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<Personaje> detallePersonajes() {
         return (List<Personaje>) personajeDao.findAll();
     }
 
     @Override
+    @Transactional
     public Personaje save(Personaje personaje) {
         return personajeDao.save(personaje);
     }
 
     @Override
+    @Transactional
     public boolean delete(Long id) {
         try {
             personajeDao.deleteById(id);
@@ -39,22 +43,21 @@ public class PersonajeServiceImpl implements PersonajeService{
         }
     }
 
-    @Override
-    public Optional<Personaje> obtenerPorIdMovie(Long id) {
-        return personajeDao.findById(id);
-    }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Personaje> obtenerPersonajePorIdPelicula(Long id) {
-        return personajeDaoImpl.getPersonajeByPelicula(id);
+        return personajeDaoImpl.getPersonajeByIdPelicula(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Personaje> getPersonajeByIdEdad(Integer edad) {
         return personajeDaoImpl.findByEdad(edad);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Personaje> findByNombre(String nombre) {
         return personajeDaoImpl.findByNombre(nombre);
     }

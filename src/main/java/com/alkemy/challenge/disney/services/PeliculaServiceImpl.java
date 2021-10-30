@@ -1,9 +1,7 @@
 package com.alkemy.challenge.disney.services;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.alkemy.challenge.disney.models.Genero;
 import com.alkemy.challenge.disney.models.Pelicula;
 import com.alkemy.challenge.disney.repositories.PeliculaDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 
 
     @Override
-    public List<Pelicula> listPeliculas() {
+    public List<Pelicula> listadoPeliculas() {
         return peliculaDaoImpl.listPeliculas();
     }
 
@@ -37,8 +35,7 @@ public class PeliculaServiceImpl implements PeliculaService {
     @Override
     @Transactional
     public Pelicula save(Pelicula pelicula) {
-        System.out.println(pelicula);
-        return peliculaDao.save(pelicula);
+        return peliculaDaoImpl.save(pelicula);
 
     }
 
@@ -53,13 +50,10 @@ public class PeliculaServiceImpl implements PeliculaService {
         }
     }
 
+    @Override
     @Transactional(readOnly = true)
-    public Pelicula getPeliculaById(Pelicula pelicula) {
-        return peliculaDao.findById(pelicula.getId()).orElse(null);
-    }
-
-    public Optional<Pelicula> obtenerPorId(Long id) {
-        return peliculaDao.findById(id);
+    public Pelicula obtenerPorId(Long id) {
+        return peliculaDaoImpl.getPeliculaById(id);
     }
 
     @Override
@@ -70,7 +64,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 
     @Override
     public List<Pelicula> getPeliculaByIdGenero(Long id) {
-        return peliculaDaoImpl.getPeliculaByIdGenero(id);
+        return peliculaDaoImpl.findMovieByIdGenero(id);
     }
 
     @Override

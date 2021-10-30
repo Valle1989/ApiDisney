@@ -42,10 +42,6 @@ public class PersonajeController {
         personajeService.save(personaje);
     }
 
-    @GetMapping(path = "/{id}")
-    public Optional<Personaje> obtenerPersonajePorIdMovie(@PathVariable("id") Long id) {
-        return this.personajeService.obtenerPorIdMovie(id);
-    }
 
     @DeleteMapping(path = "/{id}")
     public String eliminarPorId(@PathVariable("id") Long id) {

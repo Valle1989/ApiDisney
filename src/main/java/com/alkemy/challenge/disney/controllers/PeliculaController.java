@@ -34,7 +34,7 @@ public class PeliculaController {
         } else if (order != null){
             return this.peliculaService.orderBy(order);
         } else{
-            return peliculaService.listPeliculas();
+            return peliculaService.listadoPeliculas();
         }
     }
 
@@ -49,7 +49,7 @@ public class PeliculaController {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<Pelicula> obtenerPeliculaPorId(@PathVariable("id") Long id) {
+    public Pelicula obtenerPeliculaPorId(@PathVariable("id") Long id) {
         return this.peliculaService.obtenerPorId(id);
     }
 

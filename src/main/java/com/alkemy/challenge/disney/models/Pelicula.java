@@ -2,6 +2,7 @@
 package com.alkemy.challenge.disney.models;
 
 import java.io.Serializable;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
@@ -10,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
-import lombok.ToString;
 
 
 @Data
@@ -74,4 +74,5 @@ public class Pelicula implements Serializable {
     public void addPersonaje(Personaje personaje) {
         personajes.add(personaje);
     }
+
 }
