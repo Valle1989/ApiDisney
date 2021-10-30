@@ -2,6 +2,7 @@ package com.alkemy.challenge.disney.repositories;
 
 import com.alkemy.challenge.disney.models.Genero;
 import com.alkemy.challenge.disney.models.Pelicula;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,18 +12,22 @@ import java.util.List;
 
 public class PeliculaDaoImpl {
 
+    @Autowired
+    PeliculaDao peliculaDao;
+
     @PersistenceContext
     private EntityManager em;
 
     public List<Pelicula> listPeliculas() {
-        Query query = em.createQuery("Select p.titulo, p.fecha_creacion from Pelicula p");
-        return (List<Pelicula>) query.getResultList();
+        //Query query = em.createQuery("Select p.titulo, p.fecha_creacion from Pelicula p");
+        //return (List<Pelicula>) query.getResultList();
+        return peliculaDao.findImageTitleAndDate();
     }
 
     public List<Pelicula> findByTitulo(String titulo) {
-        Query query = em.createQuery("from Pelicula p where p.titulo =:titulo");
-        query.setParameter("titulo", titulo);
-        return query.getResultList();
+        //Query query = em.createQuery("from Pelicula p where p.titulo =:titulo");
+        //query.setParameter("titulo", titulo);
+        return peliculaDao.findByTitulo(titulo);
     }
 
     public List<Pelicula> findByGenero(Long id) {
@@ -33,10 +38,10 @@ public class PeliculaDaoImpl {
     }
 
 
-    public List<Genero>getPeliculaByIdGenero(Long id) {
-        Query query = em.createQuery("from Genero g inner join g.peliculas p where p.id =:id");
+    public List<Pelicula>getPeliculaByIdGenero(Long id) {
+        Query query = em.createQuery("from Pelicula p where p.genero.id =:id");
         query.setParameter("id", id);
-        return (List<Genero>) query.getResultList();
+        return (List<Pelicula>) query.getResultList();
     }
 
 

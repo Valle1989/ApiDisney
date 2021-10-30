@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
@@ -14,6 +15,7 @@ import lombok.Data;
 @Entity
 @Table(name = "personaje")
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Personaje implements Serializable {
     
     private static final long serialVersionUID = 1L;

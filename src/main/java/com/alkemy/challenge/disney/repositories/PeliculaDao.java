@@ -13,11 +13,11 @@ import java.util.List;
 @Repository
 public interface PeliculaDao extends CrudRepository<Pelicula, Long> {
 
-        //@Query("SELECT  new Pelicula(p.imagen, p.titulo, p.fecha_creacion) FROM Pelicula p")
-        //public List<Pelicula> findImageTitleAndDate();
+        @Query("SELECT  new Pelicula(p.imagen, p.titulo, p.fecha_creacion) FROM Pelicula p")
+        public List<Pelicula> findImageTitleAndDate();
 
-        //@Query("from Pelicula p where p.titulo =:titulo")
-        //public List<Pelicula> findByTitulo(@Param("titulo") String titulo);
+        @Query("from Pelicula p where p.titulo =:titulo")
+        public List<Pelicula> findByTitulo(@Param("titulo") String titulo);
 
         //@Query("from Pelicula p order by p.fecha_creacion ")
         //public List<Pelicula> orderBy(@Param("order") String order);

@@ -67,13 +67,9 @@ public class PeliculaServiceImpl implements PeliculaService {
         return peliculaDaoImpl.findByTitulo(titulo);
     }
 
-    //@Override
-    //public List<Pelicula> findByGenero(Long id) {
-        //return peliculaDaoImpl.findByGenero(id);
-    //}
 
     @Override
-    public List<Genero> getPeliculaByIdGenero(Long id) {
+    public List<Pelicula> getPeliculaByIdGenero(Long id) {
         return peliculaDaoImpl.getPeliculaByIdGenero(id);
     }
 

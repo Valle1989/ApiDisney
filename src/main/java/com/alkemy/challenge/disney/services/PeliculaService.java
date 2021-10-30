@@ -23,7 +23,7 @@ public interface PeliculaService {
 
     //public List<Pelicula> findByGenero(Long id);
 
-    public List<Genero>getPeliculaByIdGenero(Long id);
+    public List<Pelicula>getPeliculaByIdGenero(Long id);
 
     public List<Pelicula> orderBy(String order);
 

@@ -8,14 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "genero")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Genero implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -28,8 +30,7 @@ public class Genero implements Serializable {
 
     private String imagen;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_genero")
+    @OneToMany(mappedBy = "genero")
     private List<Pelicula> peliculas;
 
     public Genero() {

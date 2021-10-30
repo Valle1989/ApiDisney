@@ -2,11 +2,12 @@
 package com.alkemy.challenge.disney.models;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.ToString;
@@ -16,7 +17,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "pelicula")
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
-@ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Pelicula implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -43,8 +44,9 @@ public class Pelicula implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "personaje_id"))
     private List<Personaje> personajes;
 
-    //@ManyToOne(cascade = {CascadeType.PERSIST})
-    //private Genero genero;
+    @ManyToOne
+    @JoinColumn(name = "id_genero")
+    private Genero genero;
 
     public Pelicula(){
         
